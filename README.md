@@ -1,7 +1,4 @@
 # Kumami Games Page
-
-A responsive React web application showcasing a collection of games with a modern dark theme inspired by Kumami's design aesthetic.
-
 ## Tech Stack
 - **React 18** - Modern React with functional components and hooks
 - **Tailwind CSS** - Utility-first CSS framework for rapid styling
