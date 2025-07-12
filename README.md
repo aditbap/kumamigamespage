@@ -2,10 +2,9 @@
 This is a front-end test project created as part of the internship application process at **Kumami**. The goal is to implement a clean and responsive **game article card layout**, based on the provided design reference.
 
 ## Tech Stack
-- **React 18** - Modern React with functional components and hooks
-- **Tailwind CSS** - Utility-first CSS framework for rapid styling
-- **Modern JavaScript (ES6+)** - Clean, modern JavaScript syntax
-- **Responsive Design** - Mobile-first approach with flexible grid layouts
+- **React 18**
+- **Tailwind CSS** 
+- **JavaScript (ES6+)**
 
 ## Getting Started
 
