@@ -1,4 +1,6 @@
 # Kumami Games Page
+This is a front-end test project created as part of the internship application process at **Kumami**. The goal is to implement a clean and responsive **game article card layout**, based on the provided design reference.
+
 ## Tech Stack
 - **React 18** - Modern React with functional components and hooks
 - **Tailwind CSS** - Utility-first CSS framework for rapid styling
