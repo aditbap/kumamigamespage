@@ -8,7 +8,7 @@ A responsive React web application showcasing a collection of games with a moder
 - **Modern JavaScript (ES6+)** - Clean, modern JavaScript syntax
 - **Responsive Design** - Mobile-first approach with flexible grid layouts
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
