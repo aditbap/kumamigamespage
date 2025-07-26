@@ -1,146 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [hasAnimatedIn, setHasAnimatedIn] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => setHasAnimatedIn(true), 100);
-  }, []);
-
+const Navbar = ({ isLoggedIn, user, isPremium, onLogout }) => {
   return (
-    <nav className={`bg-black border-b border-gray-800/30 sticky top-0 z-50 backdrop-blur-md bg-black/95 transition-all duration-700 ease-out ${hasAnimatedIn ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <div className="flex items-center">
-              <img 
-                src="/logo.png" 
-                alt="Kumami Logo" 
-                className="w-24 h-24 object-contain cursor-pointer hover:opacity-80 transition-opacity duration-200"
-                onClick={() => {
-                  window.location.href = '/';
-                }}
-                title="Go to Homepage"
-              />
-            </div>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-8">
-              <div className="relative group">
-                <button className="text-gray-300 hover:text-[#00c2c7] px-3 py-2 text-sm font-medium transition-colors duration-200 flex items-center group">
-                  Company
-                  <svg className="ml-1 w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                
-                {/* Dropdown Menu */}
-                <div className="absolute left-0 mt-1 w-32 bg-[#000000] backdrop-blur-md border border-gray-700/50 rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 z-50">
-                  <div className="py-1">
-                    <a 
-                      href="/about" 
-                      className="block px-3 py-1.5 text-sm text-gray-300 hover:text-[#00c2c7] hover:bg-gray-800/50 transition-colors duration-200"
-                    >
-                      About Us
-                    </a>
-                  </div>
-                </div>
-              </div>
-              
-              <a href="/news" className="text-gray-300 hover:text-[#00c2c7] px-3 py-2 text-sm font-medium transition-colors duration-200">
-                News Portal
-              </a>
-              
-              <a href="/research" className="text-gray-300 hover:text-[#00c2c7] px-3 py-2 text-sm font-medium transition-colors duration-200">
-                Research
-              </a>
-              
-              <a href="/games" className="text-white px-3 py-2 text-sm font-medium relative">
-                Games
-                <div className="absolute bottom-0 left-3 right-3 h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-full"></div>
-              </a>
-              
-              <a href="/docs" className="text-gray-300 hover:text-[#00c2c7] px-3 py-2 text-sm font-medium transition-colors duration-200">
-                Docs
-              </a>
-            </div>
-          </div>
-
-          {/* Desktop Auth Buttons */}
-          <div className="hidden md:block">
-            <div className="ml-4 flex items-center space-x-3">
-              <button className="text-gray-300 hover:text-[#00c2c7] px-4 py-2 text-sm font-medium transition-colors duration-200">
-                Login
-              </button>
-              <button className="bg-gradient-to-r from-teal-400 to-cyan-400 text-black px-6 py-2.5 rounded-full text-sm font-semibold hover:from-teal-500 hover:to-cyan-500 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-teal-400/25">
-                Sign Up
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-500"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
-              {!isOpen ? (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              ) : (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              )}
-            </button>
-          </div>
+    <nav className="w-full bg-[#132728] py-4 px-6 flex items-center justify-between">
+      {/* Logo & Menu */}
+      <div className="flex items-center gap-10">
+        <img src="/kumamiwhite.png" alt="Kumami Logo" className="h-10" />
+        <div className="flex gap-8 text-white font-normal text-base">
+          <span>Company</span>
+          <span>News Portal</span>
+          <span>Research</span>
+          <span>Docs</span>
         </div>
       </div>
-
-      {/* Mobile menu */}
-      <div className="relative md:hidden">
-        <div
-          className={`absolute left-0 right-0 top-full z-50 transition-all duration-300 transform ${isOpen ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-4 opacity-0 pointer-events-none'}`}
-          style={{ willChange: 'transform, opacity' }}
-        >
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black/95 backdrop-blur-md border-t border-gray-800/50 shadow-lg">
-            <div className="block px-3 py-2 text-gray-300 text-sm font-medium">
-              Company
-            </div>
-            <a href="/news" className="block px-3 py-2 text-gray-300 hover:text-[#00c2c7] text-sm font-medium transition-colors duration-200">
-              News Portal
-            </a>
-            <a href="/research" className="block px-3 py-2 text-gray-300 hover:text-[#00c2c7] text-sm font-medium transition-colors duration-200">
-              Research
-            </a>
-            <a href="/games" className="block px-3 py-2 text-white text-sm font-medium relative">
-              Games
-              <div className="absolute left-3 right-3 bottom-1 h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-full"></div>
-            </a>
-            <a href="/docs" className="block px-3 py-2 text-gray-300 hover:text-[#00c2c7] text-sm font-medium transition-colors duration-200">
-              Docs
-            </a>
-            {/* Mobile Auth Buttons */}
-            <div className="pt-4 pb-3 border-t border-gray-700">
-              <div className="flex flex-col space-y-3 px-3 transition-all duration-300 transform">
-                <button className="w-full bg-gray-800 text-white hover:bg-[#00c2c7] hover:text-black px-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 text-center shadow-md">
-                  Login
-                </button>
-                <button className="w-full bg-gradient-to-r from-teal-400 to-cyan-400 text-black px-4 py-2.5 rounded-full text-sm font-semibold hover:from-teal-500 hover:to-cyan-500 transition-all duration-200 text-center shadow-lg">
-                  Sign Up
-                </button>
-              </div>
-            </div>
-          </div>
+      {/* Right Side */}
+      {isLoggedIn && isPremium ? (
+        <div className="flex items-center gap-6">
+          {/* Badge PREMIUM */}
+          <span className="bg-gradient-to-r from-[#7B6CF6] to-[#48C6EF] text-white text-xs font-bold rounded-full px-4 py-1 shadow uppercase tracking-wider">PREMIUM</span>
+          {/* Email dengan underline */}
+          <span className="text-white underline text-base">username@mail.com</span>
+          {/* Avatar hijau muda */}
+          <span className="bg-[#96EDD6] text-[#163232] rounded-full w-10 h-10 flex items-center justify-center text-lg shadow">
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="#163232"/><path d="M4 20c0-2.21 3.58-4 8-4s8 1.79 8 4" fill="#163232"/></svg>
+          </span>
+          {/* Bell biru muda */}
+          <span className="text-[#48C6EF] text-xl cursor-pointer">
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 002 2zm6-6V11c0-3.07-1.63-5.64-5-6.32V4a1 1 0 10-2 0v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29A1 1 0 006 19h12a1 1 0 00.71-1.71L18 16z" fill="#48C6EF"/></svg>
+          </span>
+          {/* Log Out */}
+          <span className="text-white text-base cursor-pointer hover:text-[#96EDD6] transition" onClick={onLogout}>Log Out</span>
         </div>
-      </div>
+      ) : isLoggedIn ? (
+        <div className="flex items-center gap-6">
+          {/* Notif icon */}
+          <span className="text-white text-xl cursor-pointer">
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 002 2zm6-6V11c0-3.07-1.63-5.64-5-6.32V4a1 1 0 10-2 0v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29A1 1 0 006 19h12a1 1 0 00.71-1.71L18 16z" fill="#fff"/></svg>
+          </span>
+          {/* Subscription button */}
+          <button className="bg-[#aafafc] text-[#102425] font-bold rounded-full px-6 py-2 text-base shadow hover:bg-[#96EDD6] transition">Get Unlimited News</button>
+          {/* Avatar */}
+          <span className="bg-white text-[#102425] font-bold rounded-full w-10 h-10 flex items-center justify-center text-lg shadow">{user?.initials || 'CK'}</span>
+        </div>
+      ) : (
+        <div className="flex items-center gap-4">
+          <button className="text-white">Login</button>
+          <button className="bg-[#aafafc] text-[#102425] font-bold rounded-full px-6 py-2 text-base shadow hover:bg-[#96EDD6] transition">Get Unlimited News</button>
+        </div>
+      )}
     </nav>
   );
 };

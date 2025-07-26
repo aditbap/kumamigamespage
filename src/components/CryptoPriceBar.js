@@ -101,7 +101,7 @@ const CryptoPriceBar = () => {
   return (
     <div
       className={`hide-scrollbar w-full border-b border-gray-800/50 overflow-x-hidden transition-all duration-700 ease-out ${hasAnimatedIn ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}
-      style={{ minHeight: "56px", position: "relative", background: "#101010", outline: "2px solid #303030", outlineOffset: "-2px", paddingTop: "10px", paddingBottom: "10px" }}
+      style={{ minHeight: "56px", position: "relative", background: "#101010", paddingTop: "10px", paddingBottom: "10px" }}
     >
       <style>{`
         .hide-scrollbar::-webkit-scrollbar { display: none; }
