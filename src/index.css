@@ -29,29 +29,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #101010;
+  background: linear-gradient(180deg, #153233 0%, #2b7a7a 100%);
   color: #ffffff;
   position: relative;
 }
 
 /* Diagonal striped background pattern */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
-    45deg,
-    #181818 0px,
-    #181818 20px,
-    #101010 20px,
-    #101010 40px
-  );
-}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
