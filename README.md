@@ -1,2 +1,2 @@
 Kumami
-# aboutuskumami
+# games page kumami
