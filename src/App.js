@@ -1,11 +1,12 @@
-
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Navbar from './components/Navbar';
 import CryptoPriceBar from './components/CryptoPriceBar';
-import AboutUs from './pages/about';
 import Trending from "./pages/Trending";
 import Footer from './components/Footer';
+import GamesPage from './pages/GamesPage';
+import DetailGame from './pages/DetailGame';
+import FeaturedGame from "./pages/FeaturedGame";
 import './index.css';
 
 function NotFound() {
@@ -24,7 +25,31 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <CryptoPriceBar />
-        <AboutUs />
+        <GamesPage />
+        <Footer />
+      </>
+    ),
+    errorElement: <NotFound />, 
+  },
+  {
+    path: "/games",
+    element: (
+      <>
+        <Navbar />
+        <CryptoPriceBar />
+        <GamesPage />
+        <Footer />
+      </>
+    ),
+    errorElement: <NotFound />, 
+  },
+  {
+    path: "/detail-game",
+    element: (
+      <>
+        <Navbar />
+        <CryptoPriceBar />
+        <DetailGame />
         <Footer />
       </>
     ),
@@ -37,6 +62,18 @@ const router = createBrowserRouter([
         <Navbar />
         <CryptoPriceBar />
         <Trending />
+        <Footer />
+      </>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/featured-games",
+    element: (
+      <>
+        <Navbar />
+        <CryptoPriceBar />
+        <FeaturedGame />
         <Footer />
       </>
     ),

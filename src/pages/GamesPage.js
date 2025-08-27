@@ -1,0 +1,214 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import gamesSectionData from "../dataGamesPage/gamesSectionData";
+import newReleasedGames from "../dataGamesPage/newReleasedGamesData";
+import freeToPlayGames from "../dataGamesPage/freeToPlayGamesData";
+import featuredGames from "../dataGamesPage/featuredGamesData";
+
+const GamesPage = () => {
+	const navigate = useNavigate();
+	const images = [
+		"/checker.png",
+		"/kumamiwhite.png",
+		"/checker.png"
+	];
+	const [current, setCurrent] = useState(0);
+
+	// Auto slide
+	useEffect(() => {
+		const timer = setInterval(() => {
+			setCurrent((prev) => (prev + 1) % images.length);
+		}, 3500);
+		return () => clearInterval(timer);
+	}, [images.length]);
+
+	const nextSlide = () => setCurrent((prev) => (prev + 1) % images.length);
+	const prevSlide = () => setCurrent((prev) => (prev - 1 + images.length) % images.length);
+
+	return (
+		<div className="min-h-screen text-white font-sans" style={{background: 'linear-gradient(135deg, #3A7A7A 0%, #102425 100%)'}}>
+			{/* Hero Section */}
+			<div className="w-full flex flex-col md:flex-row pb-8" style={{minHeight: '400px'}}>
+				<div className="flex-1 flex items-stretch relative overflow-hidden">
+					{/* Carousel Slider */}
+						<div 
+							className="group w-full h-[380px] md:h-[600px] rounded-none m-0 relative transition-all duration-700 ease-in-out" 
+							style={{
+								borderTopLeftRadius:0, 
+								borderTopRightRadius:0, 
+								marginLeft:0,
+								backgroundImage: `url(${images[current]})`,
+								backgroundPosition: 'center',
+								backgroundSize: 'cover',
+							}}
+						>
+							{/* Carousel Controls - hanya muncul saat hover */}
+							<button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 text-white rounded-full w-10 h-10 flex items-center justify-center z-20 hover:bg-black/50 transition opacity-0 group-hover:opacity-100" aria-label="Previous">
+								&#8592;
+							</button>
+							<button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 text-white rounded-full w-10 h-10 flex items-center justify-center z-20 hover:bg-black/50 transition opacity-0 group-hover:opacity-100" aria-label="Next">
+								&#8594;
+							</button>
+							{/* Tidak ada slider indicator di area gambar */}
+						</div>
+				</div>
+				<div className="relative w-full md:w-[400px] flex flex-col justify-between md:pl-12 mt-8 md:mt-0 px-8" style={{minHeight:'380px'}}>
+					{/* Layer background hitam transparan di bawah konten */}
+					<div className="absolute inset-0 rounded-lg" style={{background: 'rgba(0,0,0,0.40)', zIndex: 0}} />
+					<div className="relative z-10 flex flex-col gap-2 mt-8 md:mt-16">
+						<span className="text-lg md:text-base text-white/80 mb-2">Tagline</span>
+						<h1 className="text-6xl md:text-7xl font-bold leading-tight mb-4">Title</h1>
+						<p className="text-lg md:text-m mb-4">Lorem ipsum dolor sit amet consectetur. Fringilla enim mauris quam varius at.</p>
+					</div>
+					<div className="relative z-10 flex flex-col gap-6 mb-4">
+												<button
+													className="border border-[#96EDD6] text-[#96EDD6] rounded-lg px-8 py-3 text-2xl font-normal w-fit transition-all duration-300 ease-in-out hover:bg-[#96EDD6] hover:text-[#102425]"
+													onClick={() => navigate('/detail-game')}
+												>
+													Learn More
+												</button>
+						{/* Carousel Indicators di bawah tombol Learn More */}
+						<div className="flex gap-2 items-center mt-4 justify-center md:justify-start md:pl-0">
+							{images.map((_, idx) => (
+								<span
+									key={idx}
+									className={
+										`${current === idx
+											? 'w-8 h-2 rounded-full bg-white/80'
+											: 'w-2 h-2 rounded-full bg-white/30'} inline-block transition-all duration-300`
+									}
+								/>
+							))}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* Featured Games */}
+			<div className="max-w-7xl mx-auto px-8 py-8">
+				<div className="flex items-center justify-between mb-6">
+					<div className="flex items-center justify-end w-full">
+						<div className="flex items-center rounded-full px-4 py-2 max-w-[320px] w-full" style={{background: 'rgba(46,97,98,0.6)'}}>
+							<svg className="w-5 h-5 text-white/80 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+							<input type="text" placeholder="Find Games" className="bg-transparent text-white/90 placeholder:text-white/60 outline-none w-full text-base" />
+						</div>
+						<button className="ml-2 p-2 rounded-full bg-transparent hover:bg-white/10 transition">
+							<svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/></svg>
+						</button>
+					</div>
+				</div>
+					<div className="flex items-center justify-between mb-4">
+						<h2 className="text-lg font-medium">Featured Games</h2>
+						<button className="border-2 border-[#96EDD6] text-[#96EDD6] rounded-lg px-6 py-2.5 text-sm transition-all duration-300 ease-in-out hover:bg-[#96EDD6] hover:text-[#102425]" onClick={() => navigate('/featured-games')}>view more</button>
+					</div>
+				<div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+					{featuredGames.map((game) => (
+						<div
+							key={game.id}
+							className="h-[25.5rem] bg-gray-200/30 rounded-2xl flex items-center justify-center overflow-hidden transition-all duration-300 ease-in-out hover:scale-105 hover:brightness-100 brightness-75 cursor-pointer"
+						>
+							<img src={game.image} alt={game.title} className="object-cover w-full h-full rounded-2xl" />
+						</div>
+					))}
+				</div>
+			</div>
+
+			{/* Free to Play */}
+			<div className="max-w-7xl mx-auto px-8 py-8">
+				<div className="bg-[#102425] rounded-3xl p-14">
+					<div className="flex items-center justify-between mb-6">
+						<h2 className="text-2xl font-bold">Free to Play</h2>
+						<button className="border-2 border-[#96EDD6] text-[#96EDD6] rounded-lg px-6 py-2.5 text-sm transition-all duration-300 ease-in-out hover:bg-[#96EDD6] hover:text-[#102425]">view more</button>
+					</div>
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-1">
+						{freeToPlayGames.map((game, i) => (
+							<div
+								key={game.id}
+								className="flex flex-col items-center w-11/12 mx-auto transition-all duration-300 ease-in-out"
+							>
+								<div
+									className="relative h-48 bg-gray-200/30 rounded-lg mb-2 w-full overflow-hidden brightness-75 hover:brightness-100 transition-all duration-300 ease-in-out group"
+								>
+									<img src={game.image} alt={game.title} className="object-cover w-full h-full rounded-lg" />
+									<span className="absolute top-2 left-2 bg-[#96EDD6] text-[#163232] text-xs rounded px-2 py-0.5 font-semibold transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:shadow-lg">{i < 2 ? "Free to Play" : "Coming Soon"}</span>
+								</div>
+								<span className="font-bold text-xl transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:text-[#96EDD6]">{game.title}</span>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			{/* New Released */}
+			<div className="max-w-7xl mx-auto px-8 py-8">
+				<div className="flex items-center justify-between mb-6">
+					<h2 className="text-2xl font-bold">New Released</h2>
+					<button className="border-2 border-[#96EDD6] text-[#96EDD6] rounded-lg px-6 py-2.5 text-sm transition-all duration-300 ease-in-out hover:bg-[#96EDD6] hover:text-[#102425]">view more</button>
+				</div>
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
+					{newReleasedGames.map((game) => (
+						<div key={game.id} className="flex flex-col justify-between rounded-2xl p-3 items-center transition-all duration-300 group" style={{background: '#1b3b3d'}} onMouseEnter={e => e.currentTarget.style.background = '#102425'} onMouseLeave={e => e.currentTarget.style.background = '#1b3b3d'}>
+							<div className="w-full h-80 rounded-xl overflow-hidden mb-8 flex items-center justify-center bg-gray-200/30">
+								<img src={game.image} alt={game.title} className="object-cover w-full h-full rounded-xl" />
+							</div>
+							<div className="flex items-center justify-between w-full mb-2">
+								<span className="font-bold text-base text-white">{game.title}</span>
+								<span className="border border-[#96EDD6] text-[#96EDD6] rounded-full px-4 py-1 text-xs w-fit">{game.label}</span>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+
+			{/* Most Popular, Most Played, Coming Soon */}
+			<div className="max-w-7xl mx-auto px-8 py-8 grid grid-cols-1 md:grid-cols-3 gap-8 justify-center">
+				<div className="relative">
+					<h3 className="font-bold text-2xl mb-4">Most Popular</h3>
+					<div className="flex flex-col gap-4 items-center">
+						{gamesSectionData.mostPopular.map((game) => (
+							<div key={game.id} className="flex items-center gap-2">
+								<img src={game.image} alt={game.title} className="w-20 h-24 bg-gray-200/30 rounded-md object-cover" />
+								<div>
+									<span className="font-medium">{game.title}</span>
+									<div className="text-xs text-gray-300">{game.desc}</div>
+								</div>
+							</div>
+						))}
+					</div>
+					<div className="hidden md:block absolute top-0 right-0 h-full w-px bg-gray-400/30" />
+				</div>
+				<div className="relative">
+					<h3 className="font-bold text-2xl mb-4">Most Played</h3>
+					<div className="flex flex-col gap-4 items-center">
+						{gamesSectionData.mostPlayed.map((game) => (
+							<div key={game.id} className="flex items-center gap-2">
+								<img src={game.image} alt={game.title} className="w-20 h-24 bg-gray-200/30 rounded-md object-cover" />
+								<div>
+									<span className="font-medium">{game.title}</span>
+									<div className="text-xs text-gray-300">{game.desc}</div>
+								</div>
+							</div>
+						))}
+					</div>
+					<div className="hidden md:block absolute top-0 right-0 h-full w-px bg-gray-400/30" />
+				</div>
+				<div>
+					<h3 className="font-bold text-2xl mb-4">Coming Soon</h3>
+					<div className="flex flex-col gap-4 items-center">
+						{gamesSectionData.comingSoon.map((game) => (
+							<div key={game.id} className="flex items-center gap-2">
+								<img src={game.image} alt={game.title} className="w-20 h-24 bg-gray-200/30 rounded-md object-cover" />
+								<div>
+									<span className="font-medium">{game.title}</span>
+									<div className="text-xs text-gray-300">{game.desc}</div>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default GamesPage;
