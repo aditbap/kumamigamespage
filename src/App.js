@@ -8,6 +8,10 @@ import GamesPage from './pages/GamesPage';
 import DetailGame from './pages/DetailGame';
 import FeaturedGame from "./pages/FeaturedGame";
 import FreeToPlayPages from "./pages/FreeToPlayPages";
+import NewReleased from "./pages/NewReleased";
+import MostPopular from "./pages/MostPopular";
+import MostPlayed from "./pages/MostPlayed";
+import ComingSoon from "./pages/ComingSoon";
 import './index.css';
 
 function NotFound() {
@@ -91,6 +95,54 @@ const router = createBrowserRouter([
       </>
     ),
     errorElement: <NotFound />,
+  },
+  {
+    path: "/newreleased",
+    element: (
+      <>
+        <Navbar />
+        <CryptoPriceBar />
+        <NewReleased />
+        <Footer />
+      </>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/mostpopular",
+    element: (
+      <>
+        <Navbar />
+        <CryptoPriceBar />
+        <MostPopular />
+        <Footer />
+      </>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/mostplayed",
+    element: (
+      <>
+        <Navbar />
+        <CryptoPriceBar />
+        <MostPlayed />
+        <Footer />
+      </>
+    ),
+    errorElement: <NotFound />, 
+  },
+  {
+    path: "/comingsoon",
+    element: (
+      <>
+        <Navbar />
+        <CryptoPriceBar />
+        <ComingSoon />
+        <Footer />
+      </>
+    ),
+    errorElement: <NotFound />, 
   },
 ]);
 

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import gamesSectionData from "../dataGamesPage/gamesSectionData";
-import newReleasedGames from "../dataGamesPage/newReleasedGamesData";
-import freeToPlayGames from "../dataGamesPage/freeToPlayGamesData";
+import comingSoonGamesData from '../data/comingSoonGamesData';
+import mostPlayedGamesData from '../data/mostPlayedGamesData';
+import newReleasedGamesData from '../dataGamesPage/newReleasedGamesData';
 import featuredGames from "../dataGamesPage/featuredGamesData";
+import freeToPlaySectionData from '../dataGamesPage/freeToPlaySectionData';
 
 const GamesPage = () => {
 	const [showFilter, setShowFilter] = useState(false);
@@ -188,18 +190,23 @@ const GamesPage = () => {
 						<button className="border-2 border-[#96EDD6] text-[#96EDD6] rounded-lg px-6 py-2.5 text-sm transition-all duration-300 ease-in-out hover:bg-[#96EDD6] hover:text-[#102425]" onClick={() => navigate('/freetoplay')}>view more</button>
 					</div>
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-1">
-						{freeToPlayGames.map((game, i) => (
+						{freeToPlaySectionData.map((game, i) => (
 							<div
-								key={game.id}
+								key={i}
 								className="flex flex-col items-center w-11/12 mx-auto transition-all duration-300 ease-in-out"
 							>
 								<div
 									className="relative h-48 bg-gray-200/30 rounded-lg mb-2 w-full overflow-hidden brightness-75 hover:brightness-100 transition-all duration-300 ease-in-out group"
 								>
-									<img src={game.image} alt={game.title} className="object-cover w-full h-full rounded-lg" />
-									<span className="absolute top-2 left-2 bg-[#96EDD6] text-[#163232] text-xs rounded px-2 py-0.5 font-semibold transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:shadow-lg">{i < 2 ? "Free to Play" : "Coming Soon"}</span>
+									<img src={game.mainImg} alt={game.title} className="object-cover w-full h-full rounded-lg" />
+									<div className="absolute inset-0 bg-black/25 group-hover:bg-black/0 transition duration-200" />
 								</div>
-								<span className="font-bold text-xl transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:text-[#96EDD6]">{game.title}</span>
+								<div className="flex gap-1 flex-wrap justify-center mb-1">
+									{game.tags && game.tags.map((tag, idx) => (
+										<span key={idx} className="bg-[#163232] text-[#96EDD6] rounded-full px-2 py-0.5 text-xs font-semibold">{tag}</span>
+									))}
+								</div>
+								<span className="text-white font-bold text-sm">{game.title}</span>
 							</div>
 						))}
 					</div>
@@ -208,20 +215,27 @@ const GamesPage = () => {
 
 			{/* New Released */}
 			<div className="max-w-7xl mx-auto px-8 py-8">
-				<div className="flex items-center justify-between mb-6">
-					<h2 className="text-2xl font-bold">New Released</h2>
-					<button className="border-2 border-[#96EDD6] text-[#96EDD6] rounded-lg px-6 py-2.5 text-sm transition-all duration-300 ease-in-out hover:bg-[#96EDD6] hover:text-[#102425]">view more</button>
-				</div>
+				   <div className="flex items-center justify-between mb-6">
+					   <h2 className="text-2xl font-bold">New Released</h2>
+					   <button 
+						   className="border-2 border-[#96EDD6] text-[#96EDD6] rounded-lg px-6 py-2.5 text-sm transition-all duration-300 ease-in-out hover:bg-[#96EDD6] hover:text-[#102425]"
+						   onClick={() => navigate('/newreleased')}
+					   >
+						   view more
+					   </button>
+				   </div>
 				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
-					{newReleasedGames.map((game) => (
-						<div key={game.id} className="flex flex-col justify-between rounded-2xl p-3 items-center transition-all duration-300 group" style={{background: '#1b3b3d'}} onMouseEnter={e => e.currentTarget.style.background = '#102425'} onMouseLeave={e => e.currentTarget.style.background = '#1b3b3d'}>
+					{newReleasedGamesData.map((game, idx) => (
+						<div key={idx} className="flex flex-col justify-between rounded-2xl p-3 items-center transition-all duration-300 group" style={{background: '#1b3b3d'}} onMouseEnter={e => e.currentTarget.style.background = '#102425'} onMouseLeave={e => e.currentTarget.style.background = '#1b3b3d'}>
 							<div className="w-full h-80 rounded-xl overflow-hidden mb-8 flex items-center justify-center bg-gray-200/30">
-								<img src={game.image} alt={game.title} className="object-cover w-full h-full rounded-xl" />
+								<img src={game.mainImg} alt={game.title} className="object-cover w-full h-full rounded-xl" />
 							</div>
-							<div className="flex items-center justify-between w-full mb-2">
-								<span className="font-bold text-base text-white">{game.title}</span>
-								<span className="border border-[#96EDD6] text-[#96EDD6] rounded-full px-4 py-1 text-xs w-fit">{game.label}</span>
+							<div className="flex gap-1 flex-wrap justify-center mb-2">
+								{game.tags && game.tags.map((tag, i) => (
+									<span key={i} className="border border-[#96EDD6] text-[#96EDD6] rounded-full px-4 py-1 text-xs w-fit">{tag}</span>
+								))}
 							</div>
+							<span className="font-bold text-base text-white">{game.title}</span>
 						</div>
 					))}
 				</div>
@@ -233,13 +247,19 @@ const GamesPage = () => {
 					<h3 className="font-bold text-2xl mb-4">Most Popular</h3>
 					<div className="flex flex-col gap-4 items-center">
 						{gamesSectionData.mostPopular.map((game) => (
-							<div key={game.id} className="flex items-center gap-2">
-								<img src={game.image} alt={game.title} className="w-20 h-24 bg-gray-200/30 rounded-md object-cover" />
-								<div>
-									<span className="font-medium">{game.title}</span>
-									<div className="text-xs text-gray-300">{game.desc}</div>
-								</div>
+							<div 
+							key={game.id} 
+							className="flex items-center gap-2 cursor-pointer rounded transition relative group w-full px-2 py-2"
+							onClick={() => navigate('/mostpopular')}
+							style={{ minHeight: '100px' }}
+						>
+							<span className="absolute inset-0 rounded bg-[#163232]/40 opacity-0 group-hover:opacity-100 transition-all duration-200 z-0" />
+							<img src={game.image} alt={game.title} className="w-20 h-24 bg-gray-200/30 rounded-md object-cover z-10" />
+							<div className="z-10">
+								<span className="font-medium">{game.title}</span>
+								<div className="text-xs text-gray-300">{game.desc}</div>
 							</div>
+						</div>
 						))}
 					</div>
 					<div className="hidden md:block absolute top-0 right-0 h-full w-px bg-gray-400/30" />
@@ -247,12 +267,18 @@ const GamesPage = () => {
 				<div className="relative">
 					<h3 className="font-bold text-2xl mb-4">Most Played</h3>
 					<div className="flex flex-col gap-4 items-center">
-						{gamesSectionData.mostPlayed.map((game) => (
-							<div key={game.id} className="flex items-center gap-2">
-								<img src={game.image} alt={game.title} className="w-20 h-24 bg-gray-200/30 rounded-md object-cover" />
-								<div>
+						{mostPlayedGamesData.slice(0, 5).map((game, idx) => (
+							<div
+								key={idx}
+								className="flex items-center gap-2 cursor-pointer rounded transition relative group w-full px-2 py-2"
+								onClick={() => navigate('/mostplayed')}
+								style={{ minHeight: '100px' }}
+							>
+								<span className="absolute inset-0 rounded bg-[#163232]/40 opacity-0 group-hover:opacity-100 transition-all duration-200 z-0" />
+								<img src={game.mainImg} alt={game.title} className="w-20 h-24 bg-gray-200/30 rounded-md object-cover z-10" />
+								<div className="z-10">
 									<span className="font-medium">{game.title}</span>
-									<div className="text-xs text-gray-300">{game.desc}</div>
+									<div className="text-xs text-gray-300">{game.tags && game.tags.join(', ')}</div>
 								</div>
 							</div>
 						))}
@@ -262,12 +288,18 @@ const GamesPage = () => {
 				<div>
 					<h3 className="font-bold text-2xl mb-4">Coming Soon</h3>
 					<div className="flex flex-col gap-4 items-center">
-						{gamesSectionData.comingSoon.map((game) => (
-							<div key={game.id} className="flex items-center gap-2">
-								<img src={game.image} alt={game.title} className="w-20 h-24 bg-gray-200/30 rounded-md object-cover" />
-								<div>
+						{comingSoonGamesData.slice(0, 5).map((game, idx) => (
+							<div
+								key={idx}
+								className="flex items-center gap-2 cursor-pointer rounded transition relative group w-full px-2 py-2"
+								onClick={() => navigate('/comingsoon')}
+								style={{ minHeight: '100px' }}
+							>
+								<span className="absolute inset-0 rounded bg-[#163232]/40 opacity-0 group-hover:opacity-100 transition-all duration-200 z-0" />
+								<img src={game.mainImg} alt={game.title} className="w-20 h-24 bg-gray-200/30 rounded-md object-cover z-10" />
+								<div className="z-10">
 									<span className="font-medium">{game.title}</span>
-									<div className="text-xs text-gray-300">{game.desc}</div>
+									<div className="text-xs text-gray-300">{game.tags && game.tags.join(', ')}</div>
 								</div>
 							</div>
 						))}

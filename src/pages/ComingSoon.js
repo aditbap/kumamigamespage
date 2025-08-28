@@ -1,0 +1,238 @@
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import comingSoonGamesData from '../data/comingSoonGamesData';
+
+export default function ComingSoon() {
+    const [visibleRows, setVisibleRows] = useState(4);
+    const [showFilter, setShowFilter] = useState(false);
+    const filterRef = useRef(null);
+    const maxRows = Math.ceil(comingSoonGamesData.length / 5);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!showFilter) return;
+        function handleClick(e) {
+            if (filterRef.current && !filterRef.current.contains(e.target) && e.target.id !== 'filterBtn') {
+                setShowFilter(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClick);
+        return () => document.removeEventListener('mousedown', handleClick);
+    }, [showFilter]);
+
+    return (
+        <div className="min-h-screen font-sans overflow-x-hidden overflow-y-auto" style={{background: 'linear-gradient(135deg, #3A7A7A 0%, #102425 100%)'}}>
+            <div className="max-w-7xl mx-auto px-6 md:px-12 pb-2">
+                {/* Header */}
+                <div className="flex justify-between items-center pt-8">
+                    <div>
+                        <div className="flex items-center gap-2 text-xs text-white/80 mb-2">
+                            <span className="cursor-pointer hover:text-[#96EDD6] transition" onClick={() => navigate('/games')}>Games Page</span>
+                            <span className="mx-1">&gt;</span>
+                            <span className="text-[#96EDD6]">Coming Soon</span>
+                        </div>
+                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">Coming Soon</h1>
+                        <p className="text-white/80 text-base mb-2 mt-20">Something exciting is on the way.</p>
+                    </div>
+                    <div className="flex items-center gap-2" style={{position: 'relative'}}>
+                        <div className="flex items-center bg-[#306464] rounded-full px-4 py-2 w-64">
+                            <span className="flex items-center mr-2">
+                                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="9" cy="9" r="7" stroke="#fff" strokeWidth="2" />
+                                    <line x1="15.5" y1="15.5" x2="19" y2="19" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+                                </svg>
+                            </span>
+                            <input type="text" placeholder="Find Games" className="bg-transparent w-full text-white placeholder:text-white outline-none text-base" />
+                        </div>
+                        {/* Tombol filter icon sama seperti di GamesPage */}
+                        <button 
+                            className="ml-2 p-2 rounded-full bg-transparent hover:bg-white/10 transition"
+                            onClick={() => setShowFilter(prev => !prev)}
+                            id="filterBtn"
+                        >
+                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <line x1="4" y1="21" x2="4" y2="14"/>
+                                <line x1="4" y1="10" x2="4" y2="3"/>
+                                <line x1="12" y1="21" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12" y2="3"/>
+                                <line x1="20" y1="21" x2="20" y2="16"/>
+                                <line x1="20" y1="12" x2="20" y2="3"/>
+                            </svg>
+                        </button>
+                        {/* Filter overlay/modal tepat di bawah tombol filter */}
+                        {showFilter && (
+                            <div className="absolute" style={{right: 0, top: 'calc(100% + 8px)', zIndex: 9999}} ref={filterRef}>
+                                <div style={{background: '#3A7573', borderRadius: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.15)', padding: 12, width: 200, color: '#fff', fontFamily: 'inherit'}}>
+                                    <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>Platform Type</div>
+                                    <div style={{ marginBottom: 6 }}>
+                                        <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                                            <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Web 2
+                                        </label>
+                                        <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                                            <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Web 3
+                                        </label>
+                                    </div>
+                                    <hr style={{ borderColor: 'rgba(255,255,255,0.4)', margin: '10px 0' }} />
+                                    <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>Device</div>
+                                    <div style={{ marginBottom: 6 }}>
+                                        <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                                            <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> PC Game
+                                        </label>
+                                        <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                                            <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Mobile
+                                        </label>
+                                        <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                                            <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Web Game
+                                        </label>
+                                    </div>
+                                    <hr style={{ borderColor: 'rgba(255,255,255,0.4)', margin: '10px 0' }} />
+                                    <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>Network</div>
+                                    <NetworkFilter />
+                                    <hr style={{ borderColor: 'rgba(255,255,255,0.4)', margin: '10px 0' }} />
+                                    <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>Genre</div>
+                                    <GenreFilter />
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                {/* Main image dan preview image dihapus */}
+                {/* Title & Tags tanpa indicator */}
+                <div className="flex flex-col items-center mb-8">
+                    {/* Indicator dihapus */}
+                </div>
+                {/* Game Grid */}
+                <div className="grid grid-cols-5 gap-8 mb-8">
+                    {comingSoonGamesData.slice(0, visibleRows * 5).map((game, idx) => (
+                        <div
+                            key={idx}
+                            className="flex flex-col items-center group"
+                        >
+                            <div className="relative w-[215px] h-[290px] mb-2 rounded-2xl overflow-hidden">
+                                <img src={game.mainImg} alt={game.title} className="w-full h-full object-cover" />
+                                <div className="absolute inset-0 bg-black/25 group-hover:bg-black/0 transition duration-200" />
+                            </div>
+                            <div className="flex gap-1 flex-wrap justify-center mb-1">
+                                {game.tags && game.tags.map((tag, i) => (
+                                    <span key={i} className="bg-[#163232] text-[#96EDD6] rounded-full px-2 py-0.5 text-xs font-semibold">{tag}</span>
+                                ))}
+                            </div>
+                            <span className="text-white font-bold text-sm">{game.title}</span>
+                        </div>
+                    ))}
+                </div>
+                {/* More/Minimize Button */}
+                <div className="flex justify-center mb-8">
+                    <button
+                        className="text-[#96EDD6] border-b border-[#96EDD6] px-6 py-2 bg-transparent"
+                        onClick={() => {
+                            if (visibleRows === 4) {
+                                setVisibleRows(maxRows);
+                            } else {
+                                setVisibleRows(4);
+                            }
+                        }}
+                    >
+                        {visibleRows === 4 ? 'More' : 'Minimize'}
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function NetworkFilter() {
+    const [showMore, setShowMore] = useState(false);
+    return (
+        <div style={{ marginBottom: 6 }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Ethereum
+            </label>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Solana
+            </label>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> BSC
+            </label>
+            {showMore && (
+                <>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Arbitrum
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Polygon
+                    </label>
+                </>
+            )}
+            <div
+                style={{ fontSize: 12, fontStyle: 'italic', marginTop: 2, cursor: 'pointer', color: '#fff', opacity: 0.8 }}
+                onClick={() => setShowMore(m => !m)}
+            >
+                {showMore ? 'Minimize' : 'More'}
+            </div>
+        </div>
+    );
+}
+
+function GenreFilter() {
+    const [showMore, setShowMore] = useState(false);
+    return (
+        <div style={{ marginBottom: 6 }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Action
+            </label>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Adventure
+            </label>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Arcade
+            </label>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Battle Royale
+            </label>
+            {showMore && (
+                <>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Card
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Casual
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Fighting
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> FPS 
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Horror
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Metaverse
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> MOBA
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> MMORPG
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> RPG
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Strategy
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+                        <input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Word Game
+                    </label>
+                </>
+            )}
+            <div
+                style={{ fontSize: 12, fontStyle: 'italic', marginTop: 2, cursor: 'pointer', color: '#fff', opacity: 0.8 }}
+                onClick={() => setShowMore(m => !m)}
+            >
+                {showMore ? 'Minimize' : 'More'}
+            </div>
+        </div>
+    );
+}
