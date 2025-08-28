@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import GamesPage from './pages/GamesPage';
 import DetailGame from './pages/DetailGame';
 import FeaturedGame from "./pages/FeaturedGame";
+import FreeToPlayPages from "./pages/FreeToPlayPages";
 import './index.css';
 
 function NotFound() {
@@ -74,6 +75,18 @@ const router = createBrowserRouter([
         <Navbar />
         <CryptoPriceBar />
         <FeaturedGame />
+        <Footer />
+      </>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/freetoplay",
+    element: (
+      <>
+        <Navbar />
+        <CryptoPriceBar />
+        <FreeToPlayPages />
         <Footer />
       </>
     ),

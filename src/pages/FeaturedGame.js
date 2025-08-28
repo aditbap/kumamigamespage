@@ -123,8 +123,14 @@ export default function FeaturedGame() {
 				{/* Game Grid */}
 				<div className="grid grid-cols-5 gap-8 mb-8">
 					{featuredGames.slice(0, visibleRows * 5).map((game, idx) => (
-						<div key={idx} className="flex flex-col items-center">
-							<img src={game.mainImg} alt={game.title} className="rounded-2xl w-[215px] h-[290px] object-cover mb-2" />
+						<div
+							key={idx}
+							className="flex flex-col items-center group"
+						>
+							<div className="relative w-[215px] h-[290px] mb-2 rounded-2xl overflow-hidden">
+								<img src={game.mainImg} alt={game.title} className="w-full h-full object-cover" />
+								<div className="absolute inset-0 bg-black/25 group-hover:bg-black/0 transition duration-200" />
+							</div>
 							<span className="text-white font-bold text-sm mb-1">{game.title}</span>
 							<div className="flex gap-1 flex-wrap justify-center">
 								{game.tags.map((tag, i) => (

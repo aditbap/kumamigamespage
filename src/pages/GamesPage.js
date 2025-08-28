@@ -6,6 +6,8 @@ import freeToPlayGames from "../dataGamesPage/freeToPlayGamesData";
 import featuredGames from "../dataGamesPage/featuredGamesData";
 
 const GamesPage = () => {
+	const [showFilter, setShowFilter] = useState(false);
+	const filterRef = React.useRef(null);
 	const navigate = useNavigate();
 	const images = [
 		"/checker.png",
@@ -87,14 +89,79 @@ const GamesPage = () => {
 			{/* Featured Games */}
 			<div className="max-w-7xl mx-auto px-8 py-8">
 				<div className="flex items-center justify-between mb-6">
-					<div className="flex items-center justify-end w-full">
+					<div className="flex items-center justify-end w-full" style={{position: 'relative'}}>
 						<div className="flex items-center rounded-full px-4 py-2 max-w-[320px] w-full" style={{background: 'rgba(46,97,98,0.6)'}}>
 							<svg className="w-5 h-5 text-white/80 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
 							<input type="text" placeholder="Find Games" className="bg-transparent text-white/90 placeholder:text-white/60 outline-none w-full text-base" />
 						</div>
-						<button className="ml-2 p-2 rounded-full bg-transparent hover:bg-white/10 transition">
-							<svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/></svg>
+						<button 
+							className="ml-2 p-2 rounded-full bg-transparent hover:bg-white/10 transition"
+							onClick={() => setShowFilter(prev => !prev)}
+							id="filterBtn"
+						>
+							<svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+								<line x1="4" y1="21" x2="4" y2="14"/>
+								<line x1="4" y1="10" x2="4" y2="3"/>
+								<line x1="12" y1="21" x2="12" y2="12"/>
+								<line x1="12" y1="8" x2="12" y2="3"/>
+								<line x1="20" y1="21" x2="20" y2="16"/>
+								<line x1="20" y1="12" x2="20" y2="3"/>
+							</svg>
 						</button>
+						{showFilter && (
+							<div className="absolute" style={{right: 0, top: 'calc(100% + 8px)', zIndex: 9999}} ref={filterRef}>
+								<div style={{background: '#3A7573', borderRadius: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.15)', padding: 12, width: 200, color: '#fff', fontFamily: 'inherit'}}>
+									<div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>Platform Type</div>
+									<div style={{ marginBottom: 6 }}>
+										<label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+											<input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Web 2
+										</label>
+										<label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+											<input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Web 3
+										</label>
+									</div>
+									<hr style={{ borderColor: 'rgba(255,255,255,0.4)', margin: '10px 0' }} />
+									<div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>Device</div>
+									<div style={{ marginBottom: 6 }}>
+										<label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+											<input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> PC Game
+										</label>
+										<label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+											<input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Mobile
+										</label>
+										<label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+											<input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Web Game
+										</label>
+									</div>
+									<hr style={{ borderColor: 'rgba(255,255,255,0.4)', margin: '10px 0' }} />
+									<div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>Network</div>
+									<div style={{ marginBottom: 6 }}>
+										<label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+											<input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Ethereum
+										</label>
+										<label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+											<input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Solana
+										</label>
+										<label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+											<input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> BSC
+										</label>
+									</div>
+									<hr style={{ borderColor: 'rgba(255,255,255,0.4)', margin: '10px 0' }} />
+									<div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>Genre</div>
+									<div style={{ marginBottom: 6 }}>
+										<label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+											<input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Action
+										</label>
+										<label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+											<input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Adventure
+										</label>
+										<label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 400 }}>
+											<input type="checkbox" style={{ accentColor: '#fff', width: 16, height: 16 }} /> Puzzle
+										</label>
+									</div>
+								</div>
+							</div>
+						)}
 					</div>
 				</div>
 					<div className="flex items-center justify-between mb-4">
@@ -118,7 +185,7 @@ const GamesPage = () => {
 				<div className="bg-[#102425] rounded-3xl p-14">
 					<div className="flex items-center justify-between mb-6">
 						<h2 className="text-2xl font-bold">Free to Play</h2>
-						<button className="border-2 border-[#96EDD6] text-[#96EDD6] rounded-lg px-6 py-2.5 text-sm transition-all duration-300 ease-in-out hover:bg-[#96EDD6] hover:text-[#102425]">view more</button>
+						<button className="border-2 border-[#96EDD6] text-[#96EDD6] rounded-lg px-6 py-2.5 text-sm transition-all duration-300 ease-in-out hover:bg-[#96EDD6] hover:text-[#102425]" onClick={() => navigate('/freetoplay')}>view more</button>
 					</div>
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-1">
 						{freeToPlayGames.map((game, i) => (
