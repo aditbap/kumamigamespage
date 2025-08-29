@@ -2,7 +2,7 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Navbar from './components/Navbar';
 import CryptoPriceBar from './components/CryptoPriceBar';
-import Trending from "./pages/Trending";
+// import Trending from "./pages/Trending";
 import Footer from './components/Footer';
 import GamesPage from './pages/GamesPage';
 import DetailGame from './pages/DetailGame';
@@ -60,18 +60,7 @@ const router = createBrowserRouter([
     ),
     errorElement: <NotFound />,
   },
-  {
-    path: "/Trending",
-    element: (
-      <>
-        <Navbar />
-        <CryptoPriceBar />
-        <Trending />
-        <Footer />
-      </>
-    ),
-    errorElement: <NotFound />,
-  },
+  // Trending page removed
   {
     path: "/featured-games",
     element: (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import gamesSectionData from "../dataGamesPage/gamesSectionData";
+import headerGamesData from '../dataGamesPage/headerGamesData';
 import comingSoonGamesData from '../data/comingSoonGamesData';
 import mostPlayedGamesData from '../data/mostPlayedGamesData';
 import newReleasedGamesData from '../dataGamesPage/newReleasedGamesData';
@@ -11,11 +12,7 @@ const GamesPage = () => {
 	const [showFilter, setShowFilter] = useState(false);
 	const filterRef = React.useRef(null);
 	const navigate = useNavigate();
-	const images = [
-		"/checker.png",
-		"/kumamiwhite.png",
-		"/checker.png"
-	];
+	const images = headerGamesData.map(g => g.image);
 	const [current, setCurrent] = useState(0);
 
 	// Auto slide
@@ -35,39 +32,56 @@ const GamesPage = () => {
 			<div className="w-full flex flex-col md:flex-row pb-8" style={{minHeight: '400px'}}>
 				<div className="flex-1 flex items-stretch relative overflow-hidden">
 					{/* Carousel Slider */}
-						<div 
-							className="group w-full h-[380px] md:h-[600px] rounded-none m-0 relative transition-all duration-700 ease-in-out" 
-							style={{
-								borderTopLeftRadius:0, 
-								borderTopRightRadius:0, 
-								marginLeft:0,
-								backgroundImage: `url(${images[current]})`,
-								backgroundPosition: 'center',
-								backgroundSize: 'cover',
-							}}
-						>
-							{/* Carousel Controls - hanya muncul saat hover */}
-							<button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 text-white rounded-full w-10 h-10 flex items-center justify-center z-20 hover:bg-black/50 transition opacity-0 group-hover:opacity-100" aria-label="Previous">
+						<div className="group w-full h-[380px] md:h-[600px] flex items-center justify-center relative overflow-visible">
+							{/* Coverflow Images */}
+							{[ -1, 0, 1 ].map(offset => {
+								const idx = (current + offset + images.length) % images.length;
+								let style = {
+									backgroundImage: `url(${images[idx]})`,
+									backgroundPosition: 'center',
+									backgroundSize: 'cover',
+									borderRadius: 24,
+									width: offset === 0 ? '60%' : '38%',
+									height: '90%',
+									position: 'absolute',
+									left: offset === 0 ? '20%' : offset === -1 ? '0%' : '60%',
+									zIndex: offset === 0 ? 20 : 10,
+									boxShadow: offset === 0 ? '0 8px 32px #0008' : '0 2px 8px #0006',
+									transform: `scale(${offset === 0 ? 1 : 0.82}) rotateY(${offset * 18}deg) translateY(${offset === 0 ? 0 : 20}px)`,
+									transition: 'all 0.5s cubic-bezier(.4,2,.6,1)',
+									filter: offset === 0 ? 'brightness(1)' : 'brightness(0.7)',
+									cursor: offset === 0 ? 'default' : 'pointer',
+								};
+								return (
+									<div
+										key={idx}
+										style={style}
+										onClick={() => offset !== 0 && setCurrent(idx)}
+										aria-label={offset === 0 ? 'Current' : offset === -1 ? 'Previous' : 'Next'}
+									/>
+								);
+							})}
+							{/* Carousel Controls */}
+							<button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 text-white rounded-full w-10 h-10 flex items-center justify-center z-30 hover:bg-black/50 transition opacity-0 group-hover:opacity-100" aria-label="Previous">
 								&#8592;
 							</button>
-							<button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 text-white rounded-full w-10 h-10 flex items-center justify-center z-20 hover:bg-black/50 transition opacity-0 group-hover:opacity-100" aria-label="Next">
+							<button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 text-white rounded-full w-10 h-10 flex items-center justify-center z-30 hover:bg-black/50 transition opacity-0 group-hover:opacity-100" aria-label="Next">
 								&#8594;
 							</button>
-							{/* Tidak ada slider indicator di area gambar */}
 						</div>
 				</div>
 				<div className="relative w-full md:w-[400px] flex flex-col justify-between md:pl-12 mt-8 md:mt-0 px-8" style={{minHeight:'380px'}}>
 					{/* Layer background hitam transparan di bawah konten */}
 					<div className="absolute inset-0 rounded-lg" style={{background: 'rgba(0,0,0,0.40)', zIndex: 0}} />
 					<div className="relative z-10 flex flex-col gap-2 mt-8 md:mt-16">
-						<span className="text-lg md:text-base text-white/80 mb-2">Tagline</span>
-						<h1 className="text-6xl md:text-7xl font-bold leading-tight mb-4">Title</h1>
-						<p className="text-lg md:text-m mb-4">Lorem ipsum dolor sit amet consectetur. Fringilla enim mauris quam varius at.</p>
+						<span className="text-lg md:text-base text-white/80 mb-2">{headerGamesData[current].tagline}</span>
+						<h1 className="text-6xl md:text-7xl font-bold leading-tight mb-4">{headerGamesData[current].title}</h1>
+						<p className="text-lg md:text-m mb-4">{headerGamesData[current].description}</p>
 					</div>
 					<div className="relative z-10 flex flex-col gap-6 mb-4">
 												<button
 													className="border border-[#96EDD6] text-[#96EDD6] rounded-lg px-8 py-3 text-2xl font-normal w-fit transition-all duration-300 ease-in-out hover:bg-[#96EDD6] hover:text-[#102425]"
-													onClick={() => navigate('/detail-game')}
+													onClick={() => navigate(headerGamesData[current].detailLink)}
 												>
 													Learn More
 												</button>

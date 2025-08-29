@@ -9,7 +9,7 @@ const DetailGame = () => {
 			{/* Breadcrumb & Search */}
 			<div className="flex justify-between items-center pt-8">
 				<div className="flex items-center gap-2 text-sm text-white/80">
-					  <span className="cursor-pointer hover:underline" onClick={() => navigate("/")}>Games Page</span>
+					<span className="cursor-pointer hover:text-[#96EDD6] transition" onClick={() => navigate("/")}>Games Page</span>
 					<span className="mx-1">&gt;</span>
 					  <span className="text-[#96EDD6]">Game Detail</span>
 				</div>
@@ -59,19 +59,19 @@ const DetailGame = () => {
 				<div className="w-full md:w-[320px] flex flex-col gap-6 items-center md:items-end">
 					<div className="w-full flex items-start" style={{ marginTop: '267px' }}>
 						<div className="flex gap-3 mb-2 justify-start w-full">
-							<img src="/socialmedia/discord.png" alt="Discord" className="w-5 h-5 object-contain" />
-							<img src="/socialmedia/x.png" alt="X" className="w-5 h-5 object-contain" />
-							<img src="/socialmedia/web.png" alt="Web" className="w-5 h-5 object-contain" />
+							<img src="/socialmedia/discord.png" alt="Discord" className="w-5 h-5 object-contain transition-transform duration-200 hover:scale-125 hover:drop-shadow-lg cursor-pointer" />
+							<img src="/socialmedia/x.png" alt="X" className="w-5 h-5 object-contain transition-transform duration-200 hover:scale-125 hover:drop-shadow-lg cursor-pointer" />
+							<img src="/socialmedia/web.png" alt="Web" className="w-5 h-5 object-contain transition-transform duration-200 hover:scale-125 hover:drop-shadow-lg cursor-pointer" />
 						</div>
 					</div>
 					<div className="w-full flex flex-col gap-2 items-start">
 						<span className="text-base font-bold mb-1">Available On</span>
 							<div className="flex gap-2">
-								<img src="/appstore.png" alt="App Store" className="h-12 object-contain" />
-								<img src="/playstore.png" alt="Play Store" className="h-12 object-contain" />
+								<img src="/appstore.png" alt="App Store" className="h-12 object-contain transition-transform duration-200 hover:scale-110 hover:drop-shadow-lg cursor-pointer" />
+								<img src="/playstore.png" alt="Play Store" className="h-12 object-contain transition-transform duration-200 hover:scale-110 hover:drop-shadow-lg cursor-pointer" />
 							</div>
 						</div>
-					<button className="bg-[#96EDD6] text-[#163232] rounded-lg px-8 py-3 text-lg font-bold w-full mt-2">Play Now</button>
+					<button className="bg-[#96EDD6] text-[#163232] rounded-lg px-8 py-3 text-lg font-bold w-full mt-2 transition-all duration-200 hover:bg-[#163232] hover:text-[#96EDD6] hover:scale-105 shadow-md hover:shadow-xl">Play Now</button>
 				</div>
 			</div>
 
